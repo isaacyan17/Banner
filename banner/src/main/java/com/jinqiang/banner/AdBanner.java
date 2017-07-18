@@ -277,17 +277,21 @@ public class AdBanner extends FrameLayout implements ViewPager.OnPageChangeListe
         currentItem = 1;
         if (adapter == null) {
             adapter = new BannerPagerAdapter();
+
+            mViewPager.setAdapter(adapter);
+            mViewPager.setFocusable(true);
+            mViewPager.setCurrentItem(1);
+            mViewPager.addOnPageChangeListener(this);
+            if (gravity != -1)
+                indicator.setGravity(gravity);
+            if (count <= 1)
+                mViewPager.setScrollable(false);
+            else
+                mViewPager.setScrollable(true);
+        }else {
+            adapter.notifyDataSetChanged();
+            mViewPager.setCurrentItem(1);
         }
-        mViewPager.setAdapter(adapter);
-        mViewPager.setFocusable(true);
-        mViewPager.setCurrentItem(1);
-        mViewPager.addOnPageChangeListener(this);
-        if (gravity != -1)
-            indicator.setGravity(gravity);
-        if(count<=1)
-            mViewPager.setScrollable(false);
-        else
-            mViewPager.setScrollable(true);
     }
 
     public void startAutoScroll() {
