@@ -160,8 +160,7 @@ public class AdBanner extends FrameLayout implements ViewPager.OnPageChangeListe
     public AdBanner start(){
         setBannerStyleUI();
         setImageList(imageUrls);
-        if (isAutoScroll)
-            startAutoScroll();
+        setData();
         return this;
     }
 
@@ -241,12 +240,8 @@ public class AdBanner extends FrameLayout implements ViewPager.OnPageChangeListe
                     .into(imageView);
 
 
-//            if (imageLoader!=null)
-//                imageLoader.displayImage(context, url, imageView);
-//            else
-//                Log.e("yjq", "Please set images loader.");
         }
-        setData();
+//        setData();
     }
 
     private void createIndicator() {
@@ -277,21 +272,32 @@ public class AdBanner extends FrameLayout implements ViewPager.OnPageChangeListe
         currentItem = 1;
         if (adapter == null) {
             adapter = new BannerPagerAdapter();
+            mViewPager.addOnPageChangeListener(this);
+        }
 
             mViewPager.setAdapter(adapter);
             mViewPager.setFocusable(true);
             mViewPager.setCurrentItem(1);
-            mViewPager.addOnPageChangeListener(this);
+//            mViewPager.addOnPageChangeListener(this);
             if (gravity != -1)
                 indicator.setGravity(gravity);
             if (count <= 1)
                 mViewPager.setScrollable(false);
             else
                 mViewPager.setScrollable(true);
-        }else {
-            adapter.notifyDataSetChanged();
-            mViewPager.setCurrentItem(1);
-        }
+        if (isAutoScroll)
+            startAutoScroll();
+    }
+
+    /**
+     * 更新banner数据
+     * @param imageUrls
+     */
+    public void update(List<?> imageUrls) {
+        this.imageUrls.clear();
+        this.imageUrls = imageUrls;
+        this.count = this.imageUrls.size();
+        start();
     }
 
     public void startAutoScroll() {
@@ -369,7 +375,9 @@ public class AdBanner extends FrameLayout implements ViewPager.OnPageChangeListe
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(imageViews.get(position));
+            //container.removeView(imageViews.get(position));
+            //如果做update操作，使用imageViews.get(position)会出现越界异常
+            container.removeView((View) object);
         }
 
     }

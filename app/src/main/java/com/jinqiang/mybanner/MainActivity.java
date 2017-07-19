@@ -47,13 +47,16 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mBanner = (AdBanner)findViewById(R.id.banner);
 //        mBanner.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,300));
         mBanner.isAutoPlay(true);
-        mBanner.setImages(Arrays.asList(strUrl)).start();
         mBanner.setOnBannerClickListener(new AdBanner.OnBannerClickListener() {
             @Override
             public void OnBannerClick(int position) {
 
             }
         });
+
+        mBanner.setImages(Arrays.asList(strUrl)).start();
+        //如果更新banner数据:
+//        mBanner.update(Arrays.asList(strUrl));
     }
 
     @Override
