@@ -84,6 +84,8 @@ View header= LayoutInflater.from(this).inflate(R.layout.banner_layout,null);
 ---
 
 ####TODO
-* 图片加载方式从控件中抽取出来，由开发者自定义
-* 增加其他样式
+- [ ] 图片加载方式从控件中抽取出来，由开发者自定义
+- [ ] 增加其他样式
+
+- [x] bug:修复banner数据做update操作的时候，会出现越界和数据不刷新的问题
 
